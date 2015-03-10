@@ -1,23 +1,23 @@
-if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault("counter", 0);
-
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get("counter");
-    }
-  });
-
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set("counter", Session.get("counter") + 1);
-    }
-  });
+if (Meteor.isServer) {
+    Meteor.startup(function () {
+        // 8980047 - Feb 2015
+        var postContent = httpGet("https://hacker-news.firebaseio.com/v0/item/8980047.json");
+        var comments = JSON.parse(postContent.content)["kids"];
+        Meteor.log.debug(comments);
+        _.each(comments, function (value, key) {
+            var commentContent = httpGet("https://hacker-news.firebaseio.com/v0/item/" + value + ".json");
+            Meteor.log.debug(commentContent)
+        });
+    });
 }
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
+var httpGet = function (url) {
+    var future = new Future();
+    Meteor.http.get(url, function(error, result) {
+        if (!error) {
+            return future.return(result);
+        }
+        return future.return(null);
+    });
+    return future.wait();
 }
