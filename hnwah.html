@@ -4,4 +4,15 @@
 
 <body>
   <h1>Hacker News We are Hiring Posts</h1>
+  {{> postsTable}}
 </body>
+
+<template name="postsTable">
+    {{#with getPosts}}
+        <table>
+            <tr>
+                <td>{{{.}}}</td>
+            </tr>
+        </table>
+    {{/with}}
+</template>

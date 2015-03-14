@@ -6,7 +6,7 @@
 
 underscore
 meteor-platform
-autopublish
 insecure
 http
 mrt:trail
+twbs:bootstrap
