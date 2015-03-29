@@ -8,12 +8,11 @@ if (Meteor.isServer) {
             var comments = JSON.parse(postContent.content)["kids"];
             Meteor.log.debug("number of comments: " + comments.length);
             var commentContents = [];
-            comments = [comments[0]];
             _.each(comments, function (value, key) {
                 var commentContent = httpGet("https://hacker-news.firebaseio.com/v0/item/" + value + ".json");
-                //Meteor.log.debug(commentContent.data.text);
                 commentContents.push(commentContent.data.text);
             });
+            console.log("returning comments");
             return commentContents;
         }
     });
