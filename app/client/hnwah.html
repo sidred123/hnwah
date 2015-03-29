@@ -8,11 +8,11 @@
 </body>
 
 <template name="postsTable">
-    {{#with getPosts}}
+    {{#each getPosts}}
         <table class="table table-bordered table-striped table-hnwah">
             <tr>
-                <td>{{{.}}}</td>
+                <td>{{content}}</td>
             </tr>
         </table>
-    {{/with}}
+    {{/each}}
 </template>
